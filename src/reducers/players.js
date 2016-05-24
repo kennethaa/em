@@ -25,6 +25,25 @@ const ARRAYS = {
     Finalelag: true,
 };
 
+function reduceArrayToObject(object, value) {
+    if (value) {
+        return Object.assign(object, {
+            [value]: true
+        });
+    }
+    return object;
+}
+
+function getWinner(score) {
+    const s = score.split('-');
+    const homeScore = s[0];
+    const awayScore = s[1];
+
+    if (homeScore > awayScore) return 1;
+    else if (homeScore < awayScore) return -1;
+    return 0;
+}
+
 const initialState = {
     players: {},
     playersByRank: [],
@@ -53,15 +72,35 @@ export default function players(state = initialState, action) {
 
                 Object.keys(results).forEach((key) => {
                     if (state.results && state.results[key]) {
-                        if (state.results[key] === results[key]) {
-                            // Group matches
-                            if (!POINTS[key]) {
-                                // TODO: winner / result
-                                points[key] = 1;
-                                totalPoints++;
-                            } else if (POINTS[key]) {
+                        if (ARRAYS[key]) {
+                            if (Object.keys(state.results[key]).length) {
+                                points[key] = 0;
+                                results[key].split(SPLIT).forEach((value) => {
+                                    if (state.results[key][value]) {
+                                        points[key] = points[key] + POINTS[key];
+                                        totalPoints = totalPoints + POINTS[key];
+                                    }
+                                });
+                            }
+                        } else if (POINTS[key]) {
+                            points[key] = 0;
+                            if (state.results[key] === results[key]) {
                                 points[key] = POINTS[key];
                                 totalPoints = totalPoints + POINTS[key];
+                            }
+                        } else {
+                            points[key] = 0;
+                            if (state.results[key] === results[key]) {
+                                points[key] = POINTS_MATCH_RESULT;
+                                totalPoints = totalPoints + POINTS_MATCH_RESULT;
+                            }
+
+                            const winner = getWinner(state.results[key]);
+                            const playerWinner = getWinner(results[key]);
+
+                            if (winner === playerWinner) {
+                                points[key] = points[key] + POINTS_MATCH_WINNER;
+                                totalPoints = totalPoints + POINTS_MATCH_WINNER;
                             }
                         }
                     }
@@ -96,6 +135,15 @@ export default function players(state = initialState, action) {
         }
 
         case GET_RESULTS: {
+            if (
+                !action.results ||
+                !action.results.feed ||
+                !action.results.feed.entry ||
+                !action.results.feed.entry[0]
+            ) {
+                return state;
+            }
+
             const results = action.results.feed.entry[0];
 
             const KEY = '$t';
@@ -142,10 +190,17 @@ export default function players(state = initialState, action) {
                     'Assistkonge etter gruppespill': results.gsx$assistkongeettergruppespill[KEY],
                     'Råtasslag etter gruppespill': results['gsx$råtasslagettergruppespill'][KEY],
                     'Hvem går videre til 8-delsfinaler?':
-                        results['gsx$hvemgårvideretil8-delsfinaler'][KEY].split(SPLIT),
-                    Kvartfinalelag: results.gsx$kvartfinalelag[KEY].split(SPLIT),
-                    Semifinalelag: results.gsx$semifinalelag[KEY].split(SPLIT),
-                    Finalelag: results.gsx$finalelag[KEY].split(SPLIT),
+                        results['gsx$hvemgårvideretil8-delsfinaler'][KEY].split(SPLIT)
+                            .reduce(reduceArrayToObject, {}),
+                    Kvartfinalelag:
+                        results.gsx$kvartfinalelag[KEY].split(SPLIT)
+                            .reduce(reduceArrayToObject, {}),
+                    Semifinalelag:
+                        results.gsx$semifinalelag[KEY].split(SPLIT)
+                            .reduce(reduceArrayToObject, {}),
+                    Finalelag:
+                        results.gsx$finalelag[KEY].split(SPLIT)
+                            .reduce(reduceArrayToObject, {}),
                     Vinnerlag: results.gsx$vinnerlag[KEY],
                     Toppscorer: results.gsx$toppscorer[KEY],
                     Assistkonge: results.gsx$assistkonge[KEY]

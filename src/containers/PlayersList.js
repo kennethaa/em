@@ -1,7 +1,27 @@
 import React, { Component, PropTypes } from 'react';
+import { Link } from 'react-router';
 import { Row, Col } from 'react-flexbox-grid/lib';
 import { List, ListItem } from 'material-ui/List';
-import { Link } from 'react-router';
+import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
+
+import SentimentVerySatisfied from 'material-ui/svg-icons/social/sentiment-very-satisfied';
+import SentimentSatisfied from 'material-ui/svg-icons/social/sentiment-satisfied';
+import SentimentNeutral from 'material-ui/svg-icons/social/sentiment-neutral';
+import SentimentVeryDissatisfied from 'material-ui/svg-icons/social/sentiment-very-dissatisfied';
+
+import {
+    blue500,
+    green500,
+    red500
+} from 'material-ui/styles/colors';
+
+function getLeftIcon(i, length) {
+    if (i === 0) return <SentimentVerySatisfied color={blue500} />;
+    if (i > 0 && i <= 2) return <SentimentSatisfied color={green500} />;
+    if (i === length - 1) return <SentimentVeryDissatisfied color={red500} />;
+
+    return <SentimentNeutral color={'rgb(117, 117, 117)'} />;
+}
 
 class PlayersList extends Component {
     render() {
@@ -11,7 +31,7 @@ class PlayersList extends Component {
             <Row>
                 <Col xs={12} className="no-padding-left no-padding-right">
                     <List>
-                        {playersByRank.map((player) =>
+                        {playersByRank.map((player, i) =>
                             (
                             <Link
                                 key={player._id}
@@ -20,6 +40,12 @@ class PlayersList extends Component {
                                 <ListItem
                                     primaryText={player.name}
                                     secondaryText={`${player.totalPoints} poeng`}
+                                    leftIcon={
+                                        <span>
+                                            {getLeftIcon(i, playersByRank.length)}
+                                        </span>
+                                    }
+                                    rightIcon={<ChevronRight />}
                                 />
                             </Link>
                             )
