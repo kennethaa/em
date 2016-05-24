@@ -54,8 +54,15 @@ export default function players(state = initialState, action) {
                 Object.keys(results).forEach((key) => {
                     if (state.results && state.results[key]) {
                         if (state.results[key] === results[key]) {
-                            points[key] = 1;
-                            totalPoints++;
+                            // Group matches
+                            if (!POINTS[key]) {
+                                // TODO: winner / result
+                                points[key] = 1;
+                                totalPoints++;
+                            } else if (POINTS[key]) {
+                                points[key] = POINTS[key];
+                                totalPoints = totalPoints + POINTS[key];
+                            }
                         }
                     }
                 });
