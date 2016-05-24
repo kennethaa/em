@@ -1,0 +1,87 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
+
+html {
+    font-family: Roboto, sans-serif;
+}
+
+body {
+    margin-top: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.no-wrap, .no-wrap * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+$space-base: 16px !default;
+$space-small: $space-base / 2;
+$space-medium: $space-base;
+$space-large: $space-base * 2;
+$space-xlarge: $space-base * 3;
+$space-huge: $space-base * 4;
+
+$spaces-positions: 'top', 'right', 'bottom', 'left';
+$spaces-list: 'margin', 'padding';
+
+// this generates classes like .margin-left-medium or .padding-bottom-large etc.
+@each $type in $spaces-list {
+    @each $position in $spaces-positions {
+        .#{$type}-#{$position} {
+            #{$type}-#{$position}: $space-small !important;
+        }
+        .#{$type}-#{$position}-medium {
+            #{$type}-#{$position}: $space-medium !important;
+        }
+        .#{$type}-#{$position}-large {
+            #{$type}-#{$position}: $space-large !important;
+        }
+        .#{$type}-#{$position}-xlarge {
+            #{$type}-#{$position}: $space-xlarge !important;
+        }
+        .#{$type}-#{$position}-huge {
+            #{$type}-#{$position}: $space-huge !important;
+        }
+        .no-#{$type}-#{$position} {
+            #{$type}-#{$position}: 0 !important;
+        }
+    }
+    .#{$type} {
+        #{$type}: $space-small !important;
+    }
+    .#{$type}-medium {
+        #{$type}: $space-medium !important;
+    }
+    .#{$type}-large {
+        #{$type}: $space-large !important;
+    }
+    .#{$type}-xlarge {
+        #{$type}: $space-xlarge !important;
+    }
+    .#{$type}-huge {
+        #{$type}: $space-huge !important;
+    }
+    .no-#{$type} {
+        #{$type}: 0 !important;
+    }
+}
+
+.no-min-width, .no-min-width * {
+    min-width: 0 !important;
+}
