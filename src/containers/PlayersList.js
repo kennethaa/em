@@ -17,9 +17,10 @@ class PlayersList extends Component {
                                 key={player._id}
                                 to={`/player/${player._id}`}
                             >
-                                <ListItem>
-                                    {player.info['Fullt navn']}
-                                </ListItem>
+                                <ListItem
+                                    primaryText={player.name}
+                                    secondaryText={`${player.totalPoints} poeng`}
+                                />
                             </Link>
                             )
                         )}

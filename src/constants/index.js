@@ -7,3 +7,4 @@ export const API_ROOT = undefined;
 
 // Results
 // https://spreadsheets.google.com/feeds/list/1z9_RyzvB2HYqGda3mw-fnJj8JhVivuuPXBHQLpWn__I/default/public/values?alt=json
+export const API_ROOT_RESULTS = 'https://spreadsheets.google.com/feeds/list/1z9_RyzvB2HYqGda3mw-fnJj8JhVivuuPXBHQLpWn__I/default/public/values?alt=json';

@@ -1,6 +1,9 @@
 import {
-    GET_PLAYERS
+    GET_PLAYERS,
+    GET_RESULTS
 } from '../constants/actionTypes';
+
+import { API_ROOT_RESULTS } from '../constants';
 
 export function getPlayers() {
     return (dispatch, getState) => new Promise((resolve) => {
@@ -18,4 +21,16 @@ export function getPlayers() {
             }))
         , 'players');
     });
+}
+
+export function getResults() {
+    return (dispatch) => fetch(API_ROOT_RESULTS)
+        .then((response) => response.json())
+        .then((json) =>
+            dispatch({
+                type: GET_RESULTS,
+                results: json
+            })
+        )
+        .catch(() => {});
 }

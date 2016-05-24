@@ -11,6 +11,7 @@ class Players extends Component {
     constructor(props, context) {
         super(props, context);
 
+        this.getResults = this.getResults.bind(this);
         this.getPlayers = this.getPlayers.bind(this);
 
         this.state = {
@@ -19,14 +20,17 @@ class Players extends Component {
     }
 
     componentDidMount() {
-        this.getPlayers();
+        this.getResults();
+    }
+
+    getResults() {
+        this.addLoading();
+        const { apiActions: { getResults } } = this.props;
+        getResults().then(() => this.getPlayers());
     }
 
     getPlayers() {
-        this.addLoading();
-
         const { apiActions: { getPlayers } } = this.props;
-
         getPlayers().then(() => this.removeLoading());
     }
 

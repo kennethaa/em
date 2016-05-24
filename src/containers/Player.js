@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import {
     Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn
 } from 'material-ui/Table';
+import Divider from 'material-ui/Divider';
 
 const styles = {
     question: {
@@ -27,6 +28,7 @@ class Player extends Component {
     constructor(props, context) {
         super(props, context);
 
+        this.getResults = this.getResults.bind(this);
         this.getPlayers = this.getPlayers.bind(this);
 
         this.state = {
@@ -35,14 +37,17 @@ class Player extends Component {
     }
 
     componentDidMount() {
-        this.getPlayers();
+        this.getResults();
+    }
+
+    getResults() {
+        this.addLoading();
+        const { apiActions: { getResults } } = this.props;
+        getResults().then(() => this.getPlayers());
     }
 
     getPlayers() {
-        this.addLoading();
-
         const { apiActions: { getPlayers } } = this.props;
-
         getPlayers().then(() => this.removeLoading());
     }
 
@@ -79,6 +84,17 @@ class Player extends Component {
                     :
                     <Row>
                         <Col xs={12} className="no-padding-left no-padding-right">
+                            <h4
+                                className="
+                                    margin-left
+                                    margin-right
+                                    padding-left-medium
+                                    padding-right-medium
+                                "
+                            >
+                                {player.name}
+                            </h4>
+                            <Divider />
                             <Table
                                 selectable={false}
                                 className=""
@@ -112,7 +128,7 @@ class Player extends Component {
                                     displayRowCheckbox={false}
                                     showRowHover
                                 >
-                                    {Object.keys(player.info).map((key) => (
+                                    {Object.keys(player.results).map((key) => (
                                         <TableRow
                                             key={key}
                                             selectable={false}
@@ -125,12 +141,12 @@ class Player extends Component {
                                             <TableRowColumn
                                                 style={styles.answer}
                                             >
-                                                {player.info[key]}
+                                                {player.results[key]}
                                             </TableRowColumn>
                                             <TableRowColumn
                                                 style={styles.point}
                                             >
-                                                {0}
+                                                {player.points[key] && player.points[key]}
                                             </TableRowColumn>
                                         </TableRow>
                                     ))}
