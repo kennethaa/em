@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Row, Col } from 'react-flexbox-grid/lib';
 import { List, ListItem } from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 
 import SentimentVerySatisfied from 'material-ui/svg-icons/social/sentiment-very-satisfied';
@@ -30,6 +31,18 @@ class PlayersList extends Component {
         return (
             <Row>
                 <Col xs={12} className="no-padding-left no-padding-right">
+                    <a href="http://goo.gl/forms/gsCOF58Ak0dBofiD3" target="_blank">
+                        <h4
+                            className="
+                                margin-left
+                                margin-right
+                                padding-left-medium
+                                padding-right-medium
+                            "
+                        >
+                            {'Påmeldingsskjema'}
+                        </h4>
+                    </a>
                     <List>
                         {playersByRank.map((player, i) =>
                             (
@@ -37,6 +50,7 @@ class PlayersList extends Component {
                                 key={player._id}
                                 to={`/player/${player._id}`}
                             >
+                                <Divider />
                                 <ListItem
                                     primaryText={player.name}
                                     secondaryText={`${player.totalPoints} poeng`}
