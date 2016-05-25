@@ -12,8 +12,13 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import { blue500 } from 'material-ui/styles/colors';
 
-const muiTheme = getMuiTheme();
+const muiTheme = getMuiTheme({
+    palette: {
+        primary1Color: blue500
+    }
+});
 
 const store = configureStore();
 

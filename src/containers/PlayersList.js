@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Row, Col } from 'react-flexbox-grid/lib';
+import FlatButton from 'material-ui/FlatButton';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import ChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
@@ -31,18 +32,14 @@ class PlayersList extends Component {
         return (
             <Row>
                 <Col xs={12} className="no-padding-left no-padding-right">
-                    <a href="http://goo.gl/forms/gsCOF58Ak0dBofiD3" target="_blank">
-                        <h4
-                            className="
-                                margin-left
-                                margin-right
-                                padding-left-medium
-                                padding-right-medium
-                            "
-                        >
-                            {'Påmeldingsskjema'}
-                        </h4>
-                    </a>
+                    <FlatButton
+                        label="Påmeldingsskjema"
+                        primary
+                        linkButton
+                        href="http://goo.gl/forms/gsCOF58Ak0dBofiD3"
+                        target="_blank"
+                        className="margin"
+                    />
                     <List>
                         {playersByRank.map((player, i) =>
                             (
