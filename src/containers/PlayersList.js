@@ -39,6 +39,7 @@ class PlayersList extends Component {
                         href="http://goo.gl/forms/gsCOF58Ak0dBofiD3"
                         target="_blank"
                         className="margin"
+                        disabled
                     />
                     <List>
                         {playersByRank.map((player, i) =>
