@@ -17,6 +17,14 @@ import {
     red500
 } from 'material-ui/styles/colors';
 
+const PAYOUTS = [
+    3200,
+    1600,
+    800,
+    400,
+    200
+];
+
 function getLeftIcon(i, length) {
     if (i === 0) return <SentimentVerySatisfied color={blue500} />;
     if (i > 0 && i <= 2) return <SentimentSatisfied color={green500} />;
@@ -51,7 +59,11 @@ class PlayersList extends Component {
                                 <Divider />
                                 <ListItem
                                     primaryText={player.name}
-                                    secondaryText={`${player.totalPoints} poeng`}
+                                    secondaryText={
+                                        `
+                                            ${PAYOUTS[i] ? `${PAYOUTS[i]} kr, ` : ''}
+                                            ${player.totalPoints} poeng`
+                                    }
                                     leftIcon={
                                         <span>
                                             {getLeftIcon(i, playersByRank.length)}
